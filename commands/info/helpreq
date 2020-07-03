@@ -1,0 +1,47 @@
+const { MessageEmbed } = require("discord.js");
+
+module.exports = {
+  name: "helpreq",
+  usage: "help <message>",
+  description: "Send help request",
+  catergory: "info",
+  run: (client, message, args) => {
+    if (!args.length) {
+      return message.channel.send("Please, type your request for help");
+    }
+
+    let channel = message.guild.channels.cache.find(
+      x => x.name === "help-requests"
+    );
+
+    if (!channel) {
+      return message.channel.send("channel not found named - help-requests");
+    }
+
+    let embed = new MessageEmbed()
+      .setAuthor(message.author.tag, message.author.avatarURL())
+      .setThumbnail("https://i.imgur.com/TWrAZ5I.png")
+      .setColor("#b252a1")
+      .setDescription(args.join(" "))
+      .addFields(
+        { name: "\u200B", value: "\u200B" },
+
+        {
+          name: "Private Server",
+          value: "https://bit.ly/31wmhwM",
+          inline: false
+        },
+        {
+          name: "Group Link",
+          value: "https://bit.ly/genesisgrouplink",
+          inline: false
+        }
+      )
+      .setTimestamp()
+      .setFooter("Genesis Build Group", "https://i.imgur.com/PhmYzxj.png")
+
+      .setTimestamp();
+
+    channel.send(embed).then(m => {});
+  }
+};
